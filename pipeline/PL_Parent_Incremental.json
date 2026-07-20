@@ -1,0 +1,93 @@
+{
+	"name": "PL_Parent_Incremental",
+	"properties": {
+		"activities": [
+			{
+				"name": "LKUP_SQLTABLE_WATRMRK_DW",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT TableSchema, TableName, WatermarkColumn, LastLoadValue FROM dbo.ADF_Watermark_Table;",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "LOOKUP_Watermark_tbl",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "LKUP_SQLTABLE_WATRMRK_DW",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('LKUP_SQLTABLE_WATRMRK_DW').output.value",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "EXEC_SQL_INCREMENTAL",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "ForEach1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "TableSchema",
+						"value": "@item().TableSchema"
+					},
+					{
+						"name": "TableName",
+						"value": "@item().TableName"
+					},
+					{
+						"name": "WatermarkColumn",
+						"value": "@item().WatermarkColumn"
+					},
+					{
+						"name": "LastLoadValue",
+						"value": "@item().LastLoadValue"
+					}
+				],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_Child_Increamental",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"annotations": []
+	}
+}
