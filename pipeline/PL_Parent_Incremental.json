@@ -29,7 +29,7 @@
 				}
 			},
 			{
-				"name": "ForEach1",
+				"name": "ForEachSqlTable",
 				"type": "ForEach",
 				"dependsOn": [
 					{
@@ -44,47 +44,25 @@
 					"items": {
 						"value": "@activity('LKUP_SQLTABLE_WATRMRK_DW').output.value",
 						"type": "Expression"
-					}
-				}
-			},
-			{
-				"name": "EXEC_SQL_INCREMENTAL",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "ForEach1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"secureInput": false
-				},
-				"userProperties": [
-					{
-						"name": "TableSchema",
-						"value": "@item().TableSchema"
 					},
-					{
-						"name": "TableName",
-						"value": "@item().TableName"
-					},
-					{
-						"name": "WatermarkColumn",
-						"value": "@item().WatermarkColumn"
-					},
-					{
-						"name": "LastLoadValue",
-						"value": "@item().LastLoadValue"
-					}
-				],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "PL_Child_Increamental",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
+					"activities": [
+						{
+							"name": "EXEC_SQL_INCREMENTAL",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"policy": {
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "PL_Child_Increamental",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true
+							}
+						}
+					]
 				}
 			}
 		],
