@@ -1,0 +1,15 @@
+{
+	"name": "firstpipelinedemo",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "southeastasia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "4d693652-219c-4fc5-b88c-8c2c84b6350b",
+		"tenantId": "9ddeffdb-7b07-4902-9c4e-88fd8869c100"
+	}
+}
