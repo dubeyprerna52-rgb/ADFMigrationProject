@@ -25,7 +25,7 @@
 						"referenceName": "LOOKUP_Watermark_tbl",
 						"type": "DatasetReference"
 					},
-					"firstRowOnly": false
+					"firstRowOnly": true
 				}
 			},
 			{
@@ -42,7 +42,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('LKUP_SQLTABLE_WATRMRK_DW').output.value",
+						"value": "@activity('LKUP_SQLTABLE_WATRMRK_DW').output",
 						"type": "Expression"
 					},
 					"activities": [
@@ -59,7 +59,13 @@
 									"referenceName": "PL_Child_Increamental",
 									"type": "PipelineReference"
 								},
-								"waitOnCompletion": true
+								"waitOnCompletion": true,
+								"parameters": {
+									"WatermarkColumn": "@item().WatermarkColumn",
+									"TableSchema": "@item().TableSchema",
+									"TableName": "@item().TableName",
+									"LastLoadValue": "@item().LastLoadValue"
+								}
 							}
 						}
 					]
