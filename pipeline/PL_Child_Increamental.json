@@ -18,7 +18,7 @@
 					"source": {
 						"type": "SqlServerSource",
 						"sqlReaderQuery": {
-							"value": "MAX(@{pipeline().parameters.WatermarkColumn}) AS MaxValue\nFROM @{pipeline().parameters.TableSchema}.@{pipeline().parameters.TableName}\n",
+							"value": "SELECT MAX(@{pipeline().parameters.WatermarkColumn}) AS MaxValue\nFROM @{pipeline().parameters.TableSchema}.@{pipeline().parameters.TableName}\n",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -74,7 +74,10 @@
 							"typeProperties": {
 								"source": {
 									"type": "SqlServerSource",
-									"sqlReaderQuery": "@concat(\r\n    'SELECT * FROM ',\r\n    pipeline().parameters.TableSchema, '.', pipeline().parameters.TableName,\r\n    if(\r\n        equals(pipeline().parameters.LastLoadValue, null),\r\n        '', \r\n        concat(\r\n            ' WHERE ', pipeline().parameters.WatermarkColumn,\r\n            ' > ''', pipeline().parameters.LastLoadValue, ''''\r\n        )\r\n    )\r\n)",
+									"sqlReaderQuery": {
+										"value": "@concat(\r\n    'SELECT * FROM ',\r\n    pipeline().parameters.TableSchema, '.', pipeline().parameters.TableName,\r\n    if(\r\n        equals(pipeline().parameters.LastLoadValue, null),\r\n        '', \r\n        concat(\r\n            ' WHERE ', pipeline().parameters.WatermarkColumn,\r\n            ' > ''', pipeline().parameters.LastLoadValue, ''''\r\n        )\r\n    )\r\n)",
+										"type": "Expression"
+									},
 									"queryTimeout": "02:00:00",
 									"partitionOption": "None"
 								},
