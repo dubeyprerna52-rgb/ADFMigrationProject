@@ -94,7 +94,7 @@
 									}
 								}
 							},
-							"firstRowOnly": false
+							"firstRowOnly": true
 						}
 					},
 					{
@@ -243,7 +243,7 @@
 								"type": "DatasetReference",
 								"parameters": {}
 							},
-							"firstRowOnly": true
+							"firstRowOnly": false
 						}
 					},
 					{
@@ -263,6 +263,7 @@
 								"value": "@activity('LKUP_SQLTABLE_WATRMRK_DW').output.value",
 								"type": "Expression"
 							},
+							"isSequential": false,
 							"activities": [
 								{
 									"name": "EXEC_SQL_INCREMENTAL",
