@@ -3,16 +3,16 @@
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LS_SQL_MIGRATION",
-			"type": "LinkedServiceReference"
-		},
-		"parameters": {
-			"TableSchema": {
-				"type": "string",
-				"defaultValue": "@pipeline().parameters.TableSchema"
-			},
-			"TableName": {
-				"type": "string",
-				"defaultValue": "@pipeline().parameters.TableName"
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"schemaname": {
+					"value": "@pipeline().parameters.TableSchema",
+					"type": "Expression"
+				},
+				"tablename": {
+					"value": "@pipeline().parameters.TableName",
+					"type": "Expression"
+				}
 			}
 		},
 		"annotations": [],
