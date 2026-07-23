@@ -122,35 +122,17 @@
 			}
 		],
 		"parameters": {
-			"WatermarkColumn": {
-				"type": "string",
-				"defaultValue": "@item().WatermarkColumn"
-			},
 			"TableSchema": {
-				"type": "string",
-				"defaultValue": "@item().TableSchema"
+				"type": "string"
 			},
 			"TableName": {
-				"type": "string",
-				"defaultValue": "@item().TableName"
-			},
-			"LastLoadValue": {
-				"type": "string",
-				"defaultValue": "@item().LastLoadValue"
-			}
-		},
-		"variables": {
-			"TableSchema": {
-				"type": "String"
-			},
-			"TableName": {
-				"type": "String"
+				"type": "string"
 			},
 			"WatermarkColumn": {
-				"type": "String"
+				"type": "string"
 			},
 			"LastLoadValue": {
-				"type": "String"
+				"type": "string"
 			}
 		},
 		"annotations": []
