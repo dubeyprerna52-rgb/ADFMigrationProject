@@ -8,7 +8,7 @@
 		"parameters": {
 			"Table_Name": {
 				"type": "string",
-				"defaultValue": "@pipeline.parameters.TableName"
+				"defaultValue": "@pipeline().parameters.TableName"
 			}
 		},
 		"annotations": [],
